@@ -1,0 +1,6 @@
+# BGTS Context Engine — microsite
+User-agent: *
+Allow: /
+
+# Replace the host below with the production origin before publishing.
+Sitemap: https://bgts.com/bce/sitemap.xml
