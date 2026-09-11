@@ -1,11 +1,15 @@
 # BGTS Context Engine — Microsite
 
+![BGTS Context Engine — deterministic code-graph context for AI coding agents](./og-image.jpg)
+
 **Deterministic code-graph context for AI coding agents.** This repository hosts the
 single-file, self-contained landing page for the
 [BGTS Context Engine (BCE)](https://github.com/bgts-ai-org/bgts-context-engine) — an
 open-source, MIT-licensed engine that maps repositories into a deterministic code graph and
 serves the symbols, relationships and evidence AI agents need, over MCP and REST, on
 PostgreSQL with Apache AGE and pgvector.
+
+> **No model in the retrieval path. Same task, same answer.**
 
 [![Live Site](https://img.shields.io/badge/site-bgts.com%2Fbce-0d1729)](https://bgts.com/bce/)
 [![Source](https://img.shields.io/badge/repo-bgts--context--engine-181717?logo=github&logoColor=white)](https://github.com/bgts-ai-org/bgts-context-engine)
