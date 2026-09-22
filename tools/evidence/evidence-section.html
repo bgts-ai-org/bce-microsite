@@ -1,0 +1,293 @@
+<section class="sec sec-band" id="evidence" aria-labelledby="ev-h">
+    <span class="band-seam top" aria-hidden="true"></span><span class="band-glow" aria-hidden="true"></span><span class="band-seam bot" aria-hidden="true"></span>
+  <span id="benchmark" class="anchor-alias" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n data-en="EVIDENCE" data-tr="KANIT">EVIDENCE</span>
+      <h2 id="ev-h" data-i18n
+          data-en="Three runs, published whole."
+          data-tr="Üç koşu, eksiksiz yayımlandı.">Three runs, published whole.</h2>
+      <p class="lead i18n-b" data-lang="en">Two independent embedding models and nineteen agent tasks agree: the engine roughly doubles what retrieval finds at twenty symbols, and cuts an agent's search cost by a fifth to a third. The losses are on this page too — at five symbols the engine is behind, and two in five targets are never reachable from the task text at all. Those are not footnotes. They are the reason the rest is worth reading.</p>
+      <p class="lead i18n-b" data-lang="tr">İki bağımsız embedding modeli ve on dokuz ajan görevi aynı şeyi söylüyor: motor, yirmi sembolde getirmenin bulduğunu kabaca ikiye katlıyor ve bir ajanın arama maliyetini beşte bir ile üçte bir arasında düşürüyor. Kayıplar da bu sayfada — beş sembolde motor geride ve her beş hedeften ikisi görev metninden hiç erişilebilir değil. Bunlar dipnot değil. Geri kalanını okumaya değer kılan şey tam olarak bunlar.</p>
+    </div>
+
+    <ul class="ev-facts" style="margin-top:var(--s6)">
+      <li><b>40</b> <span data-i18n data-en="pull requests replayed" data-tr="pull request yeniden oynatıldı">pull requests replayed</span></li>
+      <li><b>2</b> <span data-i18n data-en="embedding models" data-tr="embedding modeli">embedding models</span></li>
+      <li><b>19</b> <span data-i18n data-en="agent tasks, two arms each" data-tr="ajan görevi, her biri iki kol">agent tasks, two arms each</span></li>
+      <li><b>3</b> <span data-i18n data-en="coding agents" data-tr="kodlama ajanı">coding agents</span></li>
+      <li><span data-i18n data-en="every loss shown" data-tr="her kayıp gösterildi">every loss shown</span></li>
+    </ul>
+
+    <!-- ==================== LAYER 1 ==================== -->
+    <div class="ev-layer">
+      <h3 data-i18n data-en="Layer 1 — does it find the right code?"
+                    data-tr="Katman 1 — doğru kodu buluyor mu?">Layer 1 — does it find the right code?</h3>
+      <p class="ev-lead i18n-b" data-lang="en">Forty merged pull requests are replayed. For each one a separate database indexes the repository as it stood immediately before that PR, so the engine never sees the future. The task text is the PR's own title and description. The right answer is the set of symbols and files the diff actually touched — tests and files the PR itself created are excluded, because they do not exist in the snapshot. Both systems return twenty symbols from the same embedding rows; the only difference is what the engine puts on top.</p>
+      <p class="ev-lead i18n-b" data-lang="tr">Kırk birleşmiş pull request yeniden oynatılıyor. Her biri için ayrı bir veritabanı, depoyu o PR'dan hemen önceki hâliyle indeksliyor; yani motor geleceği görmüyor. Görev metni, PR'ın kendi başlığı ve açıklaması. Doğru cevap, diff'in gerçekten dokunduğu semboller ve dosyalar — testler ve PR'ın kendi yarattığı dosyalar hariç, çünkü snapshot'ta yoklar. İki sistem de aynı embedding satırlarından yirmi sembol döndürüyor; tek fark motorun üstüne koyduğu şey.</p>
+
+      <ul class="ev-facts">
+        <li><b>40</b> <span data-i18n data-en="indexed" data-tr="indekslendi">indexed</span></li>
+        <li><b>2</b> <span data-i18n data-en="excluded by decision" data-tr="kararla puan dışı">excluded by decision</span></li>
+        <li><b>8</b> <span data-i18n data-en="touch no symbol — scored at file level" data-tr="hiçbir sembole dokunmuyor — dosya düzeyinde puanlandı">touch no symbol — scored at file level</span></li>
+        <li><b>30</b> <span data-i18n data-en="scored" data-tr="puanlandı">scored</span></li>
+        <li><b>16</b> tune · <b>14</b> holdout</li>
+        <li><span data-i18n data-en="median 4 code files per PR" data-tr="PR başına medyan 4 kod dosyası">median 4 code files per PR</span></li>
+      </ul>
+
+      <!-- ---------- F1 ---------- -->
+      <figure class="chart instr" id="f1">
+        <div class="instr-hd">
+          <span class="dot" aria-hidden="true" style="background:var(--i-accent)"></span>
+          <span class="t" data-i18n data-en="The K ladder" data-tr="K merdiveni">The K ladder</span>
+          <span class="r mono" id="f1-state" aria-live="polite"></span>
+        </div>
+        <div class="instr-bd">
+          <div class="chart-ctl">
+            <div class="grp" role="group" id="f1-model" aria-label="Embedding model">
+              <span class="cl" data-i18n data-en="MODEL" data-tr="MODEL">MODEL</span>
+            </div>
+            <div class="grp" role="group" id="f1-split" aria-label="Split">
+              <span class="cl" data-i18n data-en="SPLIT" data-tr="BÖLÜM">SPLIT</span>
+            </div>
+            <div class="grp" role="group" id="f1-k" aria-label="List length K">
+              <span class="cl">K</span>
+            </div>
+          </div>
+          <p class="chart-gloss i18n-b" data-lang="en"><b>tune</b> is the sixteen pull requests the engine's constants were fitted on. <b>holdout</b> is the fourteen they were not — that is the number worth reporting, and it is the default here. K is a focus, not a filter: all three list lengths stay on screen.</p>
+          <p class="chart-gloss i18n-b" data-lang="tr"><b>tune</b>, motorun sabitlerinin üzerinde ayarlandığı on altı pull request. <b>holdout</b>, ayarlanmadığı on dört tanesi — raporlanmaya değer sayı budur ve burada varsayılan odur. K bir filtre değil, odak: üç liste uzunluğu da ekranda kalır.</p>
+          <div class="plot" style="--ar:880/430"><svg id="f1-svg" role="img" aria-labelledby="f1-t f1-d" viewBox="0 0 880 430"><title id="f1-t"></title><desc id="f1-d"></desc></svg></div>
+          <p class="chart-read" id="f1-read"></p>
+          <div class="legend" id="f1-prs" aria-label="Notable pull requests"></div>
+        </div>
+        <figcaption id="f1-cap"></figcaption>
+        <details class="numbers">
+          <summary><span data-i18n data-en="Show the numbers" data-tr="Sayıları göster">Show the numbers</span><span class="sr-only" data-i18n data-en=" — this table always matches the chart above" data-tr=" — bu tablo her zaman yukarıdaki grafikle aynıdır"> — this table always matches the chart above</span></summary>
+          <div class="tbl-wrap"><table id="f1-tbl"><caption class="sr-only" id="f1-tblcap"></caption></table></div>
+        </details>
+      </figure>
+
+      <div class="metrics" style="margin-top:var(--s5)">
+        <div class="metric"><span class="k" data-i18n data-en="LATENCY, MODEL ALONE" data-tr="GECİKME, YALNIZ MODEL">LATENCY, MODEL ALONE</span><span class="v" id="f1-lat-base">—</span><span class="k" style="letter-spacing:.04em;text-transform:none" data-i18n data-en="median, end to end" data-tr="medyan, uçtan uca">median, end to end</span></div>
+        <div class="metric"><span class="k" data-i18n data-en="LATENCY, WITH THE ENGINE" data-tr="GECİKME, MOTORLA">LATENCY, WITH THE ENGINE</span><span class="v no" id="f1-lat-bce">—</span><span class="k" style="letter-spacing:.04em;text-transform:none" id="f1-lat-note"></span></div>
+        <div class="metric"><span class="k" data-i18n data-en="RETENTION" data-tr="RETENTION">RETENTION</span><span class="v" id="f1-ret">—</span><span class="k" style="letter-spacing:.04em;text-transform:none" data-i18n data-en="of the model's own correct hits, kept" data-tr="modelin kendi doğrularından korunan">of the model's own correct hits, kept</span></div>
+      </div>
+
+      <!-- ---------- F2 ---------- -->
+      <figure class="chart instr" id="f2">
+        <div class="instr-hd">
+          <span class="dot" aria-hidden="true" style="background:var(--i-type)"></span>
+          <span class="t" data-i18n data-en="Where the truths were lost" data-tr="Doğrular nerede kayboldu">Where the truths were lost</span>
+          <span class="r mono" id="f2-state" aria-live="polite"></span>
+        </div>
+        <div class="instr-bd">
+          <p class="chart-gloss i18n-b" data-lang="en">Every symbol the forty diffs actually touched, traced from the channel that put it into the candidate pool to where it ended up. This breakdown was published at K=20 only; inventing a K=5 version of it would be fabrication.</p>
+          <p class="chart-gloss i18n-b" data-lang="tr">Kırk diff'in gerçekten dokunduğu her sembol, onu aday havuzuna sokan kanaldan nereye vardığına kadar izleniyor. Bu döküm yalnızca K=20 için yayımlandı; K=5 sürümünü uydurmak veri üretmek olurdu.</p>
+          <div class="plot" style="--ar:880/450"><svg id="f2-svg" role="img" aria-labelledby="f2-t f2-d" viewBox="0 0 880 450"><title id="f2-t"></title><desc id="f2-d"></desc></svg></div>
+          <div class="legend" id="f2-legend" aria-label="Channels"></div>
+          <p class="chart-read" id="f2-read"></p>
+        </div>
+        <figcaption id="f2-cap"></figcaption>
+        <details class="numbers">
+          <summary><span data-i18n data-en="Show the numbers" data-tr="Sayıları göster">Show the numbers</span></summary>
+          <div class="tbl-wrap"><table id="f2-tbl"><caption class="sr-only" id="f2-tblcap"></caption></table></div>
+        </details>
+      </figure>
+
+      <div class="note-honest" style="margin-top:var(--s6);border-left-color:var(--signal)">
+        <span class="lb" data-i18n data-en="WHAT K=5 COSTS — PRESS IT ON THE CHART ABOVE" data-tr="K=5'İN BEDELİ — YUKARIDAKİ GRAFİKTE DENEYİN">WHAT K=5 COSTS — PRESS IT ON THE CHART ABOVE</span>
+        <p class="i18n-b" data-lang="en" style="margin-bottom:12px">At five symbols the engine does not help, and on the holdout it actively hurts: <strong>8.3% against the model's 17.9%</strong>, three pull requests lost and none won. The cause is structural. The final list interleaves the model's own ranking with the engine's scores — slot one is always the model's top hit, then the two alternate. A target the model ranked fourth therefore lands seventh, which is fine at ten and too late at five.</p>
+        <p class="i18n-b" data-lang="tr" style="margin-bottom:12px">Beş sembolde motor yardımcı olmuyor, holdout'ta ise açıkça zarar veriyor: <strong>modelin %17,9'una karşı %8,3</strong>, üç pull request kayıp, sıfır kazanç. Sebep yapısal. Nihai liste, modelin kendi sıralamasıyla motorun puanlarını dönüşümlü yerleştiriyor — birinci slot her zaman modelin en iyisi, sonra ikisi sırayla. Modelin dördüncü sıraya koyduğu bir hedef bu yüzden yediye iniyor; onda sorun değil, beşte çok geç.</p>
+        <p class="i18n-b" data-lang="en"><strong>The practical rule:</strong> if you are showing a developer a list of five, use the model's own ranking. The engine earns its place from ten upward, and most clearly at twenty — which is where a context pack for an agent sits anyway.</p>
+        <p class="i18n-b" data-lang="tr"><strong>Pratik kural:</strong> bir geliştiriciye beşlik bir liste gösteriyorsanız modelin kendi sıralamasını kullanın. Motor yerini ondan yukarısında kazanıyor, en açık biçimde de yirmide — ki bir ajan için bağlam paketi zaten oradadır.</p>
+      </div>
+
+      <!-- ---------- F3, gated ---------- -->
+      <details class="numbers" id="f3-wrap" style="border:1px solid var(--band-rule);border-radius:var(--r2);margin-top:var(--s6)">
+        <summary><span data-i18n data-en="How the jina profile was chosen — the guard sweep" data-tr="jina profili nasıl seçildi — guard taraması">How the jina profile was chosen — the guard sweep</span></summary>
+        <div id="f3-body" style="padding:0 clamp(16px,1.4vw,26px) var(--s5)"></div>
+      </details>
+    </div>
+
+    <p class="ev-turn i18n-b" data-lang="en">Finding the code is not the product. The product is what the agent does with it — and retrieval that is twice as good only pays if the agent stops searching.</p>
+    <p class="ev-turn i18n-b" data-lang="tr">Kodu bulmak ürün değil. Ürün, ajanın onunla ne yaptığı — iki kat iyi getirme, ancak ajan aramayı bırakırsa işe yarar.</p>
+
+    <!-- ==================== LAYER 2 ==================== -->
+    <div class="ev-layer">
+      <h3 data-i18n data-en="Layer 2 — does it change what the agent does?"
+                    data-tr="Katman 2 — ajanın davranışını değiştiriyor mu?">Layer 2 — does it change what the agent does?</h3>
+      <p class="ev-lead i18n-b" data-lang="en">Two separate studies, two coding agents, two models. In both the same tasks were run twice — once with repository context supplied, once without — and both arms produced real diffs against a real codebase.</p>
+      <p class="ev-lead i18n-b" data-lang="tr">İki ayrı çalışma, iki kodlama ajanı, iki model. İkisinde de aynı görevler iki kez koşuldu — bir kez depo bağlamı verilerek, bir kez verilmeden — ve iki kol da gerçek bir kod tabanı üzerinde gerçek diff'ler üretti.</p>
+
+      <div class="legend" role="tablist" id="ev-tabs" aria-label="Agent runs" style="margin-top:var(--s5)"></div>
+
+      <div id="ev-tab-cursor" role="tabpanel" aria-labelledby="ev-tab-cursor-b" tabindex="0">
+        <ul class="ev-facts">
+          <li><b>14</b> <span data-i18n data-en="tasks, 28 runs" data-tr="görev, 28 koşu">tasks, 28 runs</span></li>
+          <li>cursor-grok-4.6-xhigh-fast</li>
+          <li><span data-i18n data-en="one machine, one account, arms alternated" data-tr="tek makine, tek hesap, kollar dönüşümlü">one machine, one account, arms alternated</span></li>
+          <li>K=20 · jina-code-embeddings-1.5b</li>
+          <li><span data-i18n data-en="context computed once, 1.6 s, ~1.3k tokens" data-tr="bağlam bir kez hesaplandı, 1,6 s, ~1,3k token">context computed once, 1.6 s, ~1.3k tokens</span></li>
+        </ul>
+
+        <!-- ---------- F4 ---------- -->
+        <figure class="chart instr" id="f4">
+          <div class="instr-hd">
+            <span class="dot" aria-hidden="true" style="background:var(--i-accent)"></span>
+            <span class="t" data-i18n data-en="What the agent stopped doing" data-tr="Ajanın yapmayı bıraktığı şey">What the agent stopped doing</span>
+            <span class="r mono" data-i18n data-en="14 matched pairs" data-tr="14 eşleşmiş çift">14 matched pairs</span>
+          </div>
+          <div class="instr-bd">
+            <p class="chart-gloss i18n-b" data-lang="en">Each row is a ratio against the plain arm, so <b>1.00 means nothing changed</b>. The bar is the per-run aggregate; the open diamond is the per-task median. Where the two disagree — wall clock most of all — the aggregate is being carried by the heavy tasks, and that disagreement is itself the finding.</p>
+            <p class="chart-gloss i18n-b" data-lang="tr">Her satır sade kola göre bir oran; yani <b>1,00 hiçbir şeyin değişmediği anlamına gelir</b>. Çubuk koşu başına toplam oran; içi boş baklava ise görev bazlı medyan. İkisinin ayrıştığı yerde — en çok da sürede — toplamı ağır görevler taşıyor ve bu ayrışmanın kendisi bulgudur.</p>
+            <div class="plot" style="--ar:800/550"><svg id="f4-svg" role="img" aria-labelledby="f4-t f4-d" viewBox="0 0 800 550"><title id="f4-t"></title><desc id="f4-d"></desc></svg></div>
+            <p class="chart-read" id="f4-read"></p>
+          </div>
+          <details class="numbers">
+            <summary><span data-i18n data-en="Show all sixteen measured rows" data-tr="Ölçülen on altı satırın tamamını göster">Show all sixteen measured rows</span></summary>
+            <div class="tbl-wrap"><table id="f4-tbl"><caption class="sr-only" id="f4-tblcap"></caption></table></div>
+          </details>
+        </figure>
+
+        <!-- ---------- F5 ---------- -->
+        <figure class="chart instr" id="f5">
+          <div class="instr-hd">
+            <span class="dot" aria-hidden="true" style="background:var(--i-warn)"></span>
+            <span class="t" data-i18n data-en="The gain scales with the task" data-tr="Kazanç görevle birlikte büyüyor">The gain scales with the task</span>
+            <span class="r mono" id="f5-state" aria-live="polite"></span>
+          </div>
+          <div class="instr-bd">
+            <p class="chart-gloss i18n-b" data-lang="en">Fourteen tasks. Horizontal: how long the task took without the engine. Vertical: tokens with the engine as a share of tokens without it, so <b>below the line is cheaper</b>. Marker size is the task's own weight. No trend line is drawn — fourteen tasks at one run each do not support one.</p>
+            <p class="chart-gloss i18n-b" data-lang="tr">On dört görev. Yatay: görevin motorsuz ne kadar sürdüğü. Dikey: motorla harcanan tokenin motorsuza oranı; yani <b>çizginin altı daha ucuz</b>. İşaret boyutu görevin kendi ağırlığı. Eğilim çizgisi çizilmedi — görev başına tek koşuyla on dört nokta bunu kaldırmaz.</p>
+            <div class="g2" style="align-items:start;gap:var(--s5)">
+              <div class="plot" style="--ar:640/400"><svg id="f5-svg" viewBox="0 0 640 400" aria-hidden="true"></svg></div>
+              <div class="ev-card" id="f5-card"></div>
+            </div>
+            <div class="ev-ledger" id="f5-ledger" role="group" aria-label="Tasks T01 to T14"></div>
+            <p class="chart-read" id="f5-read"></p>
+          </div>
+          <figcaption class="i18n-b" data-lang="en">Above roughly 150 seconds the engine cuts 40% or more. Below 60 seconds it is neutral or a few seconds behind: a fixed 1.6 seconds and about 1,300 tokens per turn does not amortise on small work.</figcaption>
+          <figcaption class="i18n-b" data-lang="tr">Kabaca 150 saniyenin üstünde motor %40 ve fazlasını kesiyor. 60 saniyenin altında nötr ya da birkaç saniye geride: sabit 1,6 saniye ve tur başına yaklaşık 1.300 token küçük işlerde amorti olmuyor.</figcaption>
+          <details class="numbers">
+            <summary><span data-i18n data-en="Show all fourteen tasks" data-tr="On dört görevin tamamını göster">Show all fourteen tasks</span></summary>
+            <div class="tbl-wrap"><table id="f5-tbl"><caption class="sr-only" id="f5-tblcap"></caption></table></div>
+          </details>
+        </figure>
+
+        <div class="note-honest" style="margin-top:var(--s6)">
+          <span class="lb" data-i18n data-en="THE RUN THAT WAS NOT STARTED" data-tr="BAŞLATILMAYAN KOŞU">THE RUN THAT WAS NOT STARTED</span>
+          <p class="i18n-b" data-lang="en">A fifteenth task was prepared. On its engine arm, preflight measured a seventeen-second round trip to the embedding server and refused to start the run. The plain arm finished, but with no pair it could not be compared, so it was dropped. A stopping rule that actually fires is worth more than a fifteenth data point.</p>
+          <p class="i18n-b" data-lang="tr">On beşinci bir görev hazırlanmıştı. Motor kolunda preflight, embedding sunucusuna on yedi saniyelik bir gidiş-dönüş ölçtü ve koşuyu başlatmadı. Sade kol tamamlandı ama eşi olmadığı için karşılaştırılamadı ve elendi. Gerçekten ateşlenen bir durma kuralı, on beşinci bir veri noktasından değerlidir.</p>
+        </div>
+      </div>
+
+      <div id="ev-tab-claude" role="tabpanel" aria-labelledby="ev-tab-claude-b" tabindex="0" hidden>
+        <p class="ev-lead i18n-b" data-lang="en">The same five refactoring tasks, the same coding agent, the same model and the same prompts — once with the context engine switched on and once without. Each run produced a pull request, so the outputs are directly comparable. Every number below comes from the job logs and the diffs of those pull requests.</p>
+        <p class="ev-lead i18n-b" data-lang="tr">Aynı beş refactor görevi, aynı kodlama ajanı, aynı model ve aynı prompt'lar — bir kez context engine açıkken, bir kez kapalıyken. Her koşu bir pull request üretti; yani çıktılar doğrudan karşılaştırılabilir. Aşağıdaki her sayı, o koşuların job log'larından ve PR diff'lerinden geliyor.</p>
+
+    <div class="metrics" style="margin-top:var(--s5)">
+      <div class="metric"><span class="k" data-i18n data-en="TOTAL COST" data-tr="TOPLAM MALİYET">TOTAL COST</span><span class="v ok" data-count="-32.5" data-dec="1" data-suffix="%">−32.5%</span><span class="k" style="letter-spacing:.04em;text-transform:none">$56.54 / $83.75</span></div>
+      <div class="metric"><span class="k" data-i18n data-en="LLM CALLS" data-tr="LLM ÇAĞRISI">LLM CALLS</span><span class="v ok" data-count="-33.2" data-dec="1" data-suffix="%">−33.2%</span><span class="k" style="letter-spacing:.04em;text-transform:none">500 / 748</span></div>
+      <div class="metric"><span class="k" data-i18n data-en="WALL CLOCK" data-tr="SÜRE">WALL CLOCK</span><span class="v ok" data-count="-23.8" data-dec="1" data-suffix="%">−23.8%</span><span class="k" style="letter-spacing:.04em;text-transform:none">126m 24s / 165m 48s</span></div>
+      <div class="metric"><span class="k">TOKENS</span><span class="v ok" data-count="-26.8" data-dec="1" data-suffix="%">−26.8%</span><span class="k" style="letter-spacing:.04em;text-transform:none">60.8M / 83.0M</span></div>
+      <div class="metric"><span class="k" data-i18n data-en="LINES CHANGED" data-tr="DEĞİŞEN SATIR">LINES CHANGED</span><span class="v" data-count="-3.0" data-dec="1" data-suffix="%">−3.0%</span><span class="k" style="letter-spacing:.04em;text-transform:none">18,579 / 19,149</span></div>
+      <div class="metric"><span class="k" data-i18n data-en="TEST FILES" data-tr="TEST DOSYASI">TEST FILES</span><span class="v">14 / 15</span><span class="k" style="letter-spacing:.04em;text-transform:none" data-i18n data-en="practically equal" data-tr="pratikte eşit">practically equal</span></div>
+    </div>
+    <p class="small mono" style="margin-top:var(--s3)">
+      <span class="i18n" data-lang="en">first number = with the engine · second = without · claude-opus-5 · 4 September 2026</span>
+      <span class="i18n" data-lang="tr">ilk sayı = motorla · ikinci = motorsuz · claude-opus-5 · 4 Eylül 2026</span>
+    </p>
+
+    <p class="pull i18n-b" data-lang="en" style="margin-top:var(--s7)">The same work, for a third less. The gain is not <span>less output</span> — it is reaching the same output with <span>less trial and error</span>.</p>
+    <p class="pull i18n-b" data-lang="tr" style="margin-top:var(--s7)">Aynı iş, üçte bir daha ucuza. Kazanç <span>daha az çıktı üretmekten</span> değil, aynı çıktıya <span>daha az deneme-yanılma</span> ile ulaşmaktan geliyor.</p>
+
+    <div class="g2" style="margin-top:var(--s7);align-items:start">
+      <div>
+        <h4 style="margin-bottom:var(--s4)" data-i18n data-en="Per task, hardest last" data-tr="Görev bazında, en zoru sonda">Per task, hardest last</h4>
+        <div class="tbl-wrap instr" style="padding:var(--s3);border-color:var(--band-rule)">
+          <table class="pack">
+            <caption class="sr-only">Cost, time and LLM calls per task, with and without the engine</caption>
+            <thead><tr>
+              <th scope="col" data-i18n data-en="task" data-tr="görev">task</th>
+              <th scope="col" class="num" data-i18n data-en="cost" data-tr="maliyet">cost</th>
+              <th scope="col" class="num" data-i18n data-en="time" data-tr="süre">time</th>
+              <th scope="col" class="num">LLM</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="sym" style="color:var(--i-error)">hard-1</td><td class="num bar up" style="--v:1;--sign:1;color:var(--i-error)">+183%</td><td class="num bar up" style="--v:.73;--sign:1;color:var(--i-error)">+134%</td><td class="num bar up" style="--v:.51;--sign:1;color:var(--i-error)">+94%</td></tr>
+              <tr><td class="sym">hard-2</td><td class="num bar" style="--v:.15">−28%</td><td class="num bar" style="--v:.17">−31%</td><td class="num bar" style="--v:.1">−19%</td></tr>
+              <tr><td class="sym">hard-3</td><td class="num bar" style="--v:.16">−30%</td><td class="num bar" style="--v:.04">−7%</td><td class="num bar" style="--v:.14">−25%</td></tr>
+              <tr><td class="sym">xhard-1</td><td class="num bar" style="--v:.19">−34%</td><td class="num bar" style="--v:.1">−19%</td><td class="num bar" style="--v:.27">−50%</td></tr>
+              <tr class="top"><td class="sym">xhard-2</td><td class="num bar" style="--v:.26">−47%</td><td class="num bar" style="--v:.27">−49%</td><td class="num bar" style="--v:.32">−59%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small" style="margin-top:var(--s4)">
+          <span class="i18n" data-lang="en">The pattern is the point: the gain grows with the size of the task. <code class="ic">xhard-2</code> broke up a 6,015-line god page and came in at half the cost. Both arms produced the same architecture — 14 domain modules under <code class="ic">services/api/</code> in <code class="ic">xhard-1</code>, the same page reduced to about 570 lines in <code class="ic">xhard-2</code>.</span>
+          <span class="i18n" data-lang="tr">Asıl mesele örüntü: kazanç görev büyüdükçe büyüyor. <code class="ic">xhard-2</code>, 6.015 satırlık bir tanrı-sayfasını parçaladı ve maliyetin yarısına indi. İki taraf da aynı mimari kararları verdi — <code class="ic">xhard-1</code>'de <code class="ic">services/api/</code> altında 14 alan modülü, <code class="ic">xhard-2</code>'de aynı sayfa yaklaşık 570 satıra indi.</span>
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:var(--s4)" data-i18n data-en="Where the saving comes from" data-tr="Tasarruf nereden geliyor">Where the saving comes from</h4>
+        <ul class="vocab-list">
+          <li><span class="n">−33% LLM calls</span><span class="d i18n" data-lang="en">Fewer round trips to the model.</span><span class="d i18n" data-lang="tr">Modelle daha az gidiş-geliş.</span></li>
+          <li><span class="n">+85% tools per call</span><span class="d i18n" data-lang="en">1.31 tool calls per LLM call, against 0.71. More work per turn.</span><span class="d i18n" data-lang="tr">LLM çağrısı başına 1.31 araç çağrısı, 0.71'e karşı. Her turda daha çok iş.</span></li>
+          <li><span class="n">−26% output tokens</span><span class="d i18n" data-lang="en">Less "where might this be" reasoning.</span><span class="d i18n" data-lang="tr">Daha az "acaba nerede" muhakemesi.</span></li>
+          <li><span class="n">−26% cache reads</span><span class="d i18n" data-lang="en">The context stops bloating. This is the largest cost line.</span><span class="d i18n" data-lang="tr">Bağlam şişmeyi bırakıyor. Maliyetin en büyük kalemi bu.</span></li>
+          <li><span class="n">4 vs 8 sub-agents</span><span class="d i18n" data-lang="en">Half as many exploratory sub-agents — the most expensive way to search.</span><span class="d i18n" data-lang="tr">Yarı yarıya daha az keşif alt-ajanı — en pahalı arama biçimi.</span></li>
+        </ul>
+        <p class="small" style="margin-top:var(--s4)">
+          <span class="i18n" data-lang="en">Without the engine, the agent answers "where is the relevant code?" at runtime: it opens sub-agents, reads large files end to end, inflates its context, and then re-reads that inflated context at every step. With the engine the same question is already answered at request time, so it goes straight to the target and verifies with cheap <code class="ic">grep</code> and <code class="ic">read_file</code> calls.</span>
+          <span class="i18n" data-lang="tr">Motorsuz koşuda ajan "ilgili kod nerede" sorusunu çalışma anında çözüyor: alt ajan açıyor, büyük dosyaları baştan sona okuyor, bağlamı şişiriyor ve her adımda o şişmiş bağlamı yeniden okuyor. Motorla aynı soru istek anında zaten cevaplandığı için ajan doğrudan hedefe gidip ucuz <code class="ic">grep</code> ve <code class="ic">read_file</code> ile doğruluyor.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="note-honest" style="margin-top:var(--s7);border-left-color:var(--signal)">
+      <span class="lb" data-i18n data-en="THE TASK WHERE IT LOST — AND WHY IT IS IN THIS TABLE" data-tr="KAYBETTİĞİ GÖREV — VE NEDEN BU TABLODA">THE TASK WHERE IT LOST — AND WHY IT IS IN THIS TABLE</span>
+      <p class="i18n-b" data-lang="en" style="margin-bottom:12px">On <code class="ic">hard-1</code> the engine made things <strong>183% more expensive</strong>. The reason is in the task, not the engine: the prompt already listed the full path and line number of all six files to change, so there was nothing left to discover. The context the engine added was accurate and useless, and useless context is not free.</p>
+      <p class="i18n-b" data-lang="tr" style="margin-bottom:12px">Motor <code class="ic">hard-1</code>'de işi <strong>%183 pahalılaştırdı</strong>. Sebep motorda değil görevde: prompt zaten değiştirilecek altı dosyanın tam yolunu ve satır numarasını veriyordu, yani keşfedilecek bir şey yoktu. Motorun eklediği bağlam doğruydu ve gereksizdi; gereksiz bağlam bedava değildir.</p>
+      <p class="i18n-b" data-lang="en"><strong>The practical rule:</strong> if the task description already names the files, turn the engine off for that request — <code class="ic">contextEngine.enabled</code> is per request. Turn it on for "find the behaviour and fix it" work. Excluding <code class="ic">hard-1</code>, the remaining four tasks came in 39% cheaper with 41% fewer LLM calls.</p>
+      <p class="i18n-b" data-lang="tr"><strong>Pratik kural:</strong> görev tanımı dosya adlarını zaten veriyorsa o istek için motoru kapatın — <code class="ic">contextEngine.enabled</code> istek bazlıdır. "Şu davranışı bul ve düzelt" tipi işlerde açın. <code class="ic">hard-1</code> dışarıda bırakıldığında kalan dört görev %39 daha ucuza ve %41 daha az LLM çağrısıyla tamamlandı.</p>
+    </div>
+      </div>
+    </div>
+
+    <!-- ==================== LIMITS ==================== -->
+    <div class="note-honest" style="margin-top:var(--s9)">
+      <span class="lb" data-i18n data-en="WHAT THIS DOES NOT SHOW" data-tr="BUNUN GÖSTERMEDİĞİ ŞEYLER">WHAT THIS DOES NOT SHOW</span>
+      <ul style="display:flex;flex-direction:column;gap:11px;margin-top:4px">
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>The samples are small and the agent runs are n=1.</strong> One run per task, no repeats, in both agent studies. A single task's difference can be noise — <code class="ic">hard-1</code> and <code class="ic">T13</code> are proof. What is reliable is the total and the consistent direction on the large tasks.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Örneklemler küçük ve ajan koşuları n=1.</strong> İki ajan çalışmasında da görev başına tek koşu, tekrar yok. Tek bir görevdeki fark gürültü olabilir — <code class="ic">hard-1</code> ve <code class="ic">T13</code> bunun kanıtı. Güvenilir olan, toplam ve büyük görevlerdeki tutarlı yön.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>A fourteen-pull-request holdout moves with a single PR.</strong> In the jina run, <code class="ic">#839</code> alone is worth about seven percentage points. Read the win–tie–loss columns in the tables before the averages.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>On dört pull request'lik bir holdout tek bir PR ile oynar.</strong> jina koşusunda yalnız <code class="ic">#839</code> yaklaşık yedi puan değerinde. Ortalamalardan önce tablolardaki kazanç–berabere–kayıp sütunlarına bakın.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>Two in five targets are never reachable.</strong> Forty percent of the symbols a diff touched are not in the model's list, not named in the task text, and not a neighbour of anything that is. No list length fixes that; it is a property of how the task was written.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Her beş hedeften ikisine hiç ulaşılamıyor.</strong> Bir diff'in dokunduğu sembollerin %40'ı ne modelin listesinde, ne görev metninde adı geçiyor, ne de bunlardan birinin komşusu. Bunu liste uzunluğu çözmez; görevin nasıl yazıldığına bağlı bir özellik.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>The graph walk finds targets it cannot rank.</strong> Every symbol reached only by walking the code graph failed to make the final twenty, in all three retrieval runs. They are in the pool at a median rank near seventy. This is the single largest open defect, and it is ours.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Graf yürüyüşü, sıralayamadığı hedefler buluyor.</strong> Yalnızca kod grafı yürünerek ulaşılan her sembol, üç getirme koşusunun üçünde de son yirmiye giremedi. Havuzda medyan yetmişe yakın bir sırada duruyorlar. Bu, en büyük açık kusur ve bize ait.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>Ranking quality is ambiguous.</strong> Mean reciprocal rank improves overall but is still negative on the voyage holdout. The engine finds more, and sometimes places it a few rows lower.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Sıralama kalitesi belirsiz.</strong> Ortalama karşılıklı sıra (MRR) toplamda iyileşiyor ama voyage holdout'unda hâlâ eksi. Motor daha çok buluyor, bazen birkaç sıra aşağıya koyuyor.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>A bare title gains nothing.</strong> Replayed with only the PR title and no description, the engine and the model score identically. Without an identifier or a distinctive word in the text, there is nothing for the anchor channels to work with.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Çıplak başlık hiçbir şey kazandırmıyor.</strong> Yalnız PR başlığıyla, açıklama olmadan koşulduğunda motor ve model aynı skoru alıyor. Metinde bir tanımlayıcı ya da ayırt edici kelime yoksa çıpa kanallarının çalışacağı malzeme yok.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>Locale and configuration files are invisible to the graph.</strong> It indexes code. Translation tasks therefore go the wrong way — <code class="ic">T03</code> and <code class="ic">T13</code> are both worse with the engine on.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Locale ve konfigürasyon dosyaları graf için görünmez.</strong> Graf kodu indeksler. Bu yüzden çeviri görevleri ters yöne gidiyor — <code class="ic">T03</code> ve <code class="ic">T13</code>, motor açıkken daha kötü.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>The engine does not fix scope.</strong> Expected-file precision is 0.73 in both arms of the Cursor run, and on <code class="ic">T07</code> both touched twenty-one files where six were expected. That needs a rule in the prompt, not better retrieval.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Motor kapsamı düzeltmiyor.</strong> Cursor koşusunun iki kolunda da beklenen dosya hassasiyeti 0,73 ve <code class="ic">T07</code>'de altı dosya beklenirken ikisi de yirmi bir dosyaya dokundu. Bunun için daha iyi getirme değil, prompt'ta bir kural gerekiyor.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>The confidence label is weakly predictive.</strong> The engine's two best tasks were labelled <code class="ic">low</code>; its worst was labelled <code class="ic">high</code>. Confidence measures how much the anchors agree, not whether they are sufficient for the task. The trust report earlier on this page should be read with that caveat.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Güven etiketi zayıf öngörücü.</strong> Motorun en iyi iki görevi <code class="ic">low</code> etiketliydi; en kötüsü <code class="ic">high</code>. Güven, çıpaların ne kadar hemfikir olduğunu ölçer; görev için yeterli olup olmadıklarını değil. Bu sayfanın başındaki güven raporu bu kayıtla okunmalı.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>Retrieval costs time.</strong> End to end the engine roughly doubles query latency — 0.73 to 1.71 seconds on the hosted model, 1.32 to 2.42 on the self-hosted one, of which about 0.85 seconds is the engine itself.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Getirme zamana mal oluyor.</strong> Uçtan uca motor sorgu gecikmesini kabaca ikiye katlıyor — barındırılan modelde 0,73'ten 1,71 saniyeye, kendi sunucumuzdakinde 1,32'den 2,42'ye; bunun yaklaşık 0,85 saniyesi motorun kendisi.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>No pull request in the Claude run was compiled or tested.</strong> In all ten runs the agent had no shell, so <code class="ic">tsc</code>, <code class="ic">lint</code>, <code class="ic">test</code> and <code class="ic">build</code> were skipped in favour of static review. "Quality is equal" there rests on diff volume and file structure, not on running code. The Cursor run did compile — which is how <code class="ic">T09</code>'s failure was caught.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Claude koşusunda hiçbir PR derlenmedi veya test edilmedi.</strong> On koşunun onunda da ajanın kabuğu yoktu; <code class="ic">tsc</code>, <code class="ic">lint</code>, <code class="ic">test</code> ve <code class="ic">build</code> yerine statik inceleme yapıldı. Oradaki "kalite eşit" ifadesi çalışan koda değil, diff hacmine ve dosya yapısına dayanıyor. Cursor koşusu derledi — <code class="ic">T09</code>'un hatası bu sayede yakalandı.</li>
+        <li class="i18n-b" data-lang="en" style="font-size:.9rem;line-height:1.6"><strong>One earlier comparison was withdrawn.</strong> It showed the engine 7% worse on tokens. The cause was two machines routing to different model backends with different prompt-cache behaviour — 3.9k against 7.1k uncached input per turn — not the engine. On a single machine the difference vanished. It is recorded here because a benchmark that publishes only the run that worked is not a benchmark.</li>
+        <li class="i18n-b" data-lang="tr" style="font-size:.9rem;line-height:1.6"><strong>Daha önceki bir karşılaştırma geri çekildi.</strong> Motoru tokende %7 geride gösteriyordu. Sebep, iki makinenin farklı model arka uçlarına yönlenmesi ve farklı prompt-cache davranışıydı — tur başına 3,9k'ya karşı 7,1k cache'siz girdi — motor değil. Tek makinede fark ortadan kalktı. Burada kayıtlı, çünkü yalnızca işe yarayan koşuyu yayımlayan bir ölçüm, ölçüm değildir.</li>
+      </ul>
+    </div>
+
+    <p class="small" style="margin-top:var(--s5);max-width:var(--w-text)">
+      <span class="i18n" data-lang="en">These are BGTS's own runs, published with their weaknesses attached because that is the only kind of retrieval number worth reading. The engine ships <code class="ic">bce bench</code> and <code class="ic">bce bench-prs</code> so you can run the equivalent on your own repositories, your own pull requests and your own tasks.</span>
+      <span class="i18n" data-lang="tr">Bunlar BGTS'nin kendi koşuları ve zayıflıklarıyla birlikte yayımlanıyor; çünkü okumaya değer tek getirme sayısı bu türdendir. Motor <code class="ic">bce bench</code> ve <code class="ic">bce bench-prs</code> ile birlikte gelir — aynısını kendi depolarınızda, kendi pull request'lerinizde ve kendi görevlerinizde koşabilirsiniz.</span>
+    </p>
+  </div>
+</section>

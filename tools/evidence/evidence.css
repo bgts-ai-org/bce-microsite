@@ -1,0 +1,153 @@
+/* ============================================================
+   EVIDENCE — charts.
+
+   Every figure is an .instr panel, so the charts inherit the
+   instrument palette the product actually ships rather than a
+   second chart theme. The colour contract is narrow on purpose:
+
+     --i-dim     the embedding model alone
+     --i-accent  the model with the engine on top
+     --i-warn    was in the pool, did not fit K
+     --i-error   a number that went the wrong way
+     --i-type    the graph-walk channel
+     --i-cand    the anchor channel
+
+   --i-error is used for nothing except a loss. If red appears in
+   this section, the engine lost. That makes the palette a claim.
+   ============================================================ */
+
+/* Keeps #benchmark working as a fragment after the rename to #evidence. */
+.anchor-alias{position:absolute;scroll-margin-top:96px}
+
+.ev-layer{margin-top:var(--s9)}
+.ev-layer > h3{
+  font:600 clamp(1.25rem,1.05rem + .8vw,1.7rem)/1.25 var(--ff-display);
+  color:var(--band-ink);letter-spacing:-.01em;margin-bottom:var(--s4);
+}
+.ev-lead{max-width:var(--w-text);color:var(--band-ink-2);font-size:1rem;line-height:1.7}
+.ev-turn{
+  max-width:var(--w-text);margin:var(--s7) 0 var(--s6);padding-left:var(--s5);
+  border-left:2px solid var(--band-accent);
+  font:400 1.05rem/1.65 var(--ff-body);color:var(--band-ink);
+}
+
+/* Method facts: the run's shape, stated before any number from it. */
+.ev-facts{display:flex;flex-wrap:wrap;gap:var(--s2);margin:var(--s5) 0}
+.ev-facts li{
+  list-style:none;font:400 .76rem/1.4 var(--ff-mono);
+  color:var(--band-ink-2);background:rgba(255,255,255,.04);
+  border:1px solid var(--band-rule);border-radius:var(--r1);padding:5px 9px;
+}
+.ev-facts li b{color:var(--band-ink);font-weight:500}
+
+/* ---- figure scaffolding ---- */
+.chart{margin:var(--s6) 0 0}
+.chart .instr-bd{padding-top:var(--s4)}
+.chart-ctl{display:flex;flex-wrap:wrap;gap:var(--s5);margin-bottom:var(--s5)}
+.chart-ctl .grp{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center}
+.chart-ctl .cl{
+  font:500 .62rem/1 var(--ff-mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--i-dim);margin-right:2px;
+}
+.chart-gloss{font:400 .74rem/1.5 var(--ff-body);color:var(--i-dim);margin:calc(-1 * var(--s3)) 0 var(--s5)}
+
+/* An <svg> with a viewBox and width:100% carries its own intrinsic aspect
+   ratio, so the height is reserved before a single element is drawn and
+   nothing shifts when the JS fills it. Below the min-width the panel
+   scrolls rather than the page — the same bargain .canvas-wrap already
+   makes elsewhere on this page, and the alternative is 4px axis labels. */
+.chart .plot{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.chart .plot svg{display:block;min-width:640px;width:100%;height:auto;overflow:visible}
+.chart text{font-family:var(--ff-mono);fill:var(--band-ink-3)}
+.chart text.val{fill:var(--band-ink-2)}
+.chart text.big{fill:var(--i-text)}
+.chart .gridline{stroke:var(--i-rule);stroke-width:1}
+
+/* min-height holds the box while the sentence changes length — Turkish
+   runs ~15% longer than English and would otherwise shift the page. */
+.chart-read{
+  font:400 .86rem/1.6 var(--ff-body);color:var(--i-dim);
+  margin-top:var(--s4);min-height:3.2em;max-width:76ch;
+}
+.chart-read b{color:var(--i-text);font-weight:500}
+.chart-read .bad{color:var(--i-error)}
+.chart figcaption{
+  padding:var(--s4) clamp(16px,1.4vw,26px) 0;
+  font:400 .82rem/1.6 var(--ff-body);color:var(--i-dim);
+}
+
+details.numbers{border-top:1px solid var(--i-rule);margin-top:var(--s5)}
+details.numbers > summary{
+  cursor:pointer;list-style:none;padding:var(--s4) clamp(16px,1.4vw,26px);
+  font:500 .72rem/1 var(--ff-mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--i-dim);
+}
+details.numbers > summary::-webkit-details-marker{display:none}
+details.numbers > summary::before{content:"+ ";color:var(--i-accent)}
+details.numbers[open] > summary::before{content:"\2212 "}
+details.numbers > summary:hover{color:var(--i-accent)}
+details.numbers .tbl-wrap{padding:0 clamp(16px,1.4vw,26px) var(--s5)}
+details.numbers table{width:100%;border-collapse:collapse;font:400 .78rem/1.5 var(--ff-mono)}
+details.numbers th,details.numbers td{
+  padding:6px 10px;border-bottom:1px solid var(--i-rule);text-align:left;color:var(--i-text);
+}
+details.numbers th{color:var(--i-dim);font-weight:500;white-space:nowrap}
+details.numbers td.num,details.numbers th.num{text-align:right;font-variant-numeric:tabular-nums}
+details.numbers td.bad{color:var(--i-error)}
+details.numbers td.good{color:var(--i-accent)}
+
+/* ---- F5: the 14-task ledger and its detail card ---- */
+.ev-ledger{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s5)}
+.ev-ledger button{
+  font:500 .7rem/1 var(--ff-mono);padding:7px 9px;border-radius:var(--r1);
+  border:1px solid var(--i-rule);background:var(--i-panel);color:var(--i-dim);cursor:pointer;
+}
+.ev-ledger button::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;background:currentColor;vertical-align:middle}
+.ev-ledger button.v-win,.ev-ledger button.v-slight{color:var(--i-accent)}
+.ev-ledger button.v-loss,.ev-ledger button.v-lossSlight{color:var(--i-error)}
+.ev-ledger button[aria-pressed="true"]{border-color:currentColor;background:rgba(34,201,251,.1)}
+.ev-ledger button:hover{border-color:currentColor}
+
+.ev-card{
+  border:1px solid var(--i-rule);border-radius:var(--r2);background:var(--i-panel);
+  padding:var(--s5);display:flex;flex-direction:column;gap:var(--s4);
+}
+.ev-card .hd{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:baseline}
+.ev-card .id{font:500 .9rem/1 var(--ff-mono);color:var(--i-accent)}
+.ev-card h5{font:500 .95rem/1.4 var(--ff-body);color:var(--i-text);margin:0}
+.ev-card .why{font:400 .84rem/1.6 var(--ff-body);color:var(--i-dim);margin:0}
+.ev-pairs{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--i-rule);border:1px solid var(--i-rule);border-radius:var(--r1);overflow:hidden}
+.ev-pairs div{background:var(--i-bg);padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:3px}
+.ev-pairs .k{font:500 .58rem/1.3 var(--ff-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--i-dim)}
+.ev-pairs .v{font:500 .95rem/1 var(--ff-mono);color:var(--i-text);font-variant-numeric:tabular-nums}
+.ev-pairs .d{font:400 .68rem/1 var(--ff-mono)}
+.ev-pairs .d.good{color:var(--i-accent)}
+.ev-pairs .d.bad{color:var(--i-error)}
+
+/* ---- F6: in-cell bars on the existing per-task table, no SVG ---- */
+td.bar{position:relative}
+td.bar::after{
+  content:"";position:absolute;bottom:3px;height:3px;border-radius:2px;
+  left:50%;width:calc(var(--v,0) * 46%);
+  transform:scaleX(var(--sign,-1));transform-origin:left center;
+  background:var(--accent);
+}
+td.bar.up::after{background:var(--danger)}
+
+/* ---- shared chips ---- */
+.ev-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font:400 .72rem/1 var(--ff-mono);padding:5px 8px;border-radius:var(--r1);
+  border:1px solid var(--i-rule);color:var(--i-dim);background:var(--i-panel);
+}
+.ev-chip.warn{border-color:var(--i-warn);color:var(--i-warn);background:rgba(254,200,53,.08)}
+
+@media (max-width:719px){
+  .ev-pairs{grid-template-columns:1fr}
+  .chart-ctl{gap:var(--s4)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .chart rect.bar,.chart path.ribbon,.chart circle.pt,.chart polyline.ln{
+    transition:all .38s var(--spring-flow);
+  }
+}

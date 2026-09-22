@@ -1,0 +1,65 @@
+{
+  "source": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
+  "subsets": [
+    "latin",
+    "latin-ext"
+  ],
+  "files": [
+    {
+      "name": "archivo-var-latin-ext.woff2",
+      "bytes": 32608,
+      "weights": [
+        "600",
+        "700"
+      ],
+      "sha256": "ff4f17d21930e36d6d93baba663e624cb767afc3feebf7adaebd82242638de05"
+    },
+    {
+      "name": "archivo-var-latin.woff2",
+      "bytes": 34928,
+      "weights": [
+        "600",
+        "700"
+      ],
+      "sha256": "8f704806dbedeaaeca334b11ec348bc3ac3a439d6431544b3afb54f534ee4967"
+    },
+    {
+      "name": "inter-var-latin-ext.woff2",
+      "bytes": 85068,
+      "weights": [
+        "400",
+        "500",
+        "600"
+      ],
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+    },
+    {
+      "name": "inter-var-latin.woff2",
+      "bytes": 48256,
+      "weights": [
+        "400",
+        "500",
+        "600"
+      ],
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "name": "jetbrains-mono-var-latin-ext.woff2",
+      "bytes": 11624,
+      "weights": [
+        "400",
+        "500"
+      ],
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52"
+    },
+    {
+      "name": "jetbrains-mono-var-latin.woff2",
+      "bytes": 31432,
+      "weights": [
+        "400",
+        "500"
+      ],
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be"
+    }
+  ]
+}

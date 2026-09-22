@@ -72,7 +72,17 @@ the choice persists per browser.
   whose content is also written out in the captions beneath them
 - No horizontal scroll at any width from 320px up, and no layout shift from the entrance
   animations, both of which are Core Web Vitals inputs
-- Fonts are the only external request; everything else — images, video, CSS, JS — is inline
+- **There is no third-party request.** CSS and the page's own JS are inline; the three font
+  families, the images, the walkthrough video and the three.js build are all same-origin files
+  under `assets/`, served immutable and cache-busted by a `?v=` handle. Fonts are woff2,
+  latin + latin-ext only, with `font-display:swap` and the two families used above the fold
+  preloaded
+- Every chart in the Evidence section carries its numbers twice: as an SVG with `role="img"`,
+  a `<title>` and a generated `<desc>`, and as a real `<table>` with `<caption>` and
+  `th[scope]` inside a `<details>`. No figure is the only place a number appears
+- The WebGL hero is `aria-hidden`; when it is live the SVG hero is hidden with `visibility`,
+  not `opacity`, so its focusable nodes leave the tab order rather than becoming invisible
+  focus stops. A visually-hidden paragraph describes the graph in both languages
 
 ## 6. Before launch
 

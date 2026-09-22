@@ -1,0 +1,26 @@
+{
+  "version": "0.186.0",
+  "source": "https://cdn.jsdelivr.net/npm/three@0.186.0/",
+  "files": {
+    "three.module.min.js": {
+      "bytes": 392839,
+      "url": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js",
+      "sha384_upstream": "oxXuJrj18wuqDpmzoHiMlDkqW0q78j4G6RIMnGujQSJFPNAOySQPco8ukheqfFpF",
+      "sha384_vendored": "S9RuD+2868jQqYlmgkdu0EQApcqcQALDM04olmEHHJhExAJdpFlh38ITi5Kmanqn",
+      "patches": [
+        {
+          "from": "from\"./three.core.js\"",
+          "to": "from\"./three.core.min.js\"",
+          "occurrences": 2
+        }
+      ]
+    },
+    "three.core.min.js": {
+      "bytes": 415816,
+      "url": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.min.js",
+      "sha384_upstream": "SkU9wejqatbKwpdY5t3wOM9rvvfcAdGmvWFm3/HgavlYlxXqMiZbIADYpVuJ8LzZ",
+      "sha384_vendored": "SkU9wejqatbKwpdY5t3wOM9rvvfcAdGmvWFm3/HgavlYlxXqMiZbIADYpVuJ8LzZ",
+      "patches": []
+    }
+  }
+}
