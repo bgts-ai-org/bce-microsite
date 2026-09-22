@@ -7,6 +7,15 @@ const file = new URL('../index.html', import.meta.url);
 const src = readFileSync(file, 'utf8');
 if (/[^\r]\n/.test(src)) throw new Error('index.html already has bare LF before patch');
 
+/* Every replaceOnce below throws if its pattern is missing, so a second run
+   used to fail loudly — correct on its own, but it made this script
+   impossible to put in a build chain. Detect the finished state and exit
+   quietly instead, so tools/build.mjs can run it unconditionally. */
+if (src.includes('/api/contact')) {
+  console.log('contact form already patched — nothing to do');
+  process.exit(0);
+}
+
 function crlf(s) { return s.replace(/\r?\n/g, '\r\n'); }
 
 function replaceOnce(text, from, to, label) {

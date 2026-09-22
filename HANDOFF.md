@@ -19,6 +19,16 @@ düzenleme bir sonraki build'de sessizce kaybolur.
 | `sed -i` (Git Bash'te GNU sed) | Tüm dosyayı LF'e çevirir → 2 satırlık değişiklik 4.500 satırlık sahte diff olur |
 | `String.replace(a, b)` — `b` bir **string** ise | `$$`, `$&`, `` $` ``, `$'` özel desen sayılır. Sayfanın kendi `$$(selector)` yardımcısını sessizce `$`'a çevirir: sorunsuz parse eder, sadece bir tıklama işleyicisi çalışınca patlar. |
 
+### Aynı depoda paralel oturum çalıştırmayın
+
+Bu depoda iki ajan oturumu aynı anda çalıştı: biri Kanıt bölümünü ve varlık ayrıştırmayı,
+diğeri Gmail destekli iletişim formunu yazdı. İkisi de `serve.js`'e ve `index.html`'e dokundu.
+Bu sefer temiz birleşti ve ikinci oturum her iki işi tek commit'te (`e082190`) push etti —
+ama bu şans eseriydi. `index.html` üretilmiş bir dosya olduğu için eşzamanlı düzenleme
+sessiz kayıpla sonuçlanabilir.
+
+Biri çalışıyorsa diğeri beklesin, ya da ayrı dal kullanın.
+
 **Doğrusu:** utf8 oku, `\r\n` ile böl, `\r\n` ile birleştir, `.replace()`'e **fonksiyon** ver,
 yazmadan önce `if (/[^\r]\n/.test(out)) throw` ile doğrula. `tools/` altındaki script'lerin
 hepsi bunu yapıyor — yenisini yazmak yerine onları genişletin.
@@ -28,16 +38,36 @@ hepsi bunu yapıyor — yenisini yazmak yerine onları genişletin.
 ## 2. Yeniden inşa
 
 ```bash
-node tools/build-evidence.mjs      # Kanıt bölümü: markup + CSS + veri + grafikler
-node tools/build-hero-gl.mjs       # Hero: CSS + markup + WebGL adası
+node tools/build.mjs           # tek komut — doğru sırayı kendisi bilir
+node tools/build.mjs --check   # CI: index.html kaynaklarla senkron mu?
 ```
 
-**Sırası önemli ve ikisi birlikte çalıştırılmalıdır.** `build-evidence` kendi CSS bloğunu
-değiştirirken hero CSS'ini de kapsama alır; `build-hero-gl` onu hemen geri yazar. Tek başına
-`build-evidence` çalıştırmak güvenlidir (kendi sınırında durur), ama alışkanlık olarak ikisini
-birlikte koşun.
+Zincir dört adımdır ve sıra `tools/build.mjs` içinde kayıtlıdır:
 
-İkisi de **idempotent**: ikinci çalıştırma byte-aynı sonuç verir. Bu test edilmiştir.
+| # | Adım | Sahiplendiği bölge |
+| --- | --- | --- |
+| 1 | `build-evidence` | `#evidence` bölümü, kendi CSS bloğu, kendi script bloğu |
+| 2 | `build-hero-gl` | hero sahnesi, hero CSS'i, WebGL adası |
+| 3 | `patch-head` | `<head>` — yerelleştirilmiş fontlar, tek `<title>` |
+| 4 | `patch-contact-form` | `#contact` — forma `/api/contact` bağlar |
+
+**1 mutlaka 2'den önce gelmeli:** `build-evidence` CSS bloğunu hero bayrağına kadar yeniden
+yazar, `build-hero-gl` de onu hemen geri koyar.
+
+**3 ve 4 birer migration'dır** — kendi çıktısını tespit edip sessizce atlarlar. Hiçbir build
+adımının sahiplenmediği bölgelere (`<head>`, `#contact`) dokundukları için zincirde dururlar;
+temel bir dosyadan tam yeniden üretimi mümkün kılan şey budur.
+
+**Doğrulanmış:**
+
+- Dört adım da idempotent — ikinci çalıştırma **byte-aynı** sonuç verir.
+- Varlık çıkarma sonrası temel dosyadan tam zincir, commit edilmiş `index.html`'i
+  **byte-aynı** yeniden üretir.
+- Build adımları `#contact` bölgesine dokunmaz; iletişim formu yaması hayatta kalır
+  (deneyle doğrulandı, varsayım değil).
+
+Zincirde **olmayan** tek seferlik script'ler — tükettikleri veri artık yok ya da ağ gerekiyor:
+`extract-assets`, `patch-media`, `fetch-fonts`, `fetch-vendor`.
 
 Tek seferlik, tekrar çalıştırılması gerekmeyen script'ler:
 
@@ -152,7 +182,10 @@ Ayrıca hâlâ açık: `github.com/bgts-ai-org/bgts-context-engine` public deği
 
 ## 8. Durum
 
-Hiçbir şey commit edilmedi. `git status`: 4 değişmiş dosya + `assets/`, `tools/`,
-`.gitignore`, `serve.js`, `HANDOFF.md` takipsiz.
+`e082190` ile hepsi `origin/main`'e push edildi (46 dosya, +6.276 / −93). O commit iki
+oturumun işini birlikte taşıyor; `Co-Authored-By` satırı yalnızca birini anıyor.
 
-`index.html` 418 KB (öncesi 3,09 MB). Üçüncü taraf çalışma-zamanı isteği: **sıfır**.
+`index.html` 419 KB (öncesi 3,09 MB). Üçüncü taraf çalışma-zamanı isteği: **sıfır**.
+
+Gizli bilgi taraması yapıldı: `lib/gmail.js` kimlik bilgilerini yalnızca `process.env`'den
+okuyor, `.env` `.gitignore`'da ve takip edilmiyor, commit genelinde sabit kodlanmış token yok.
